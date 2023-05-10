@@ -4,7 +4,6 @@ import android.content.Context
 import android.graphics.Canvas
 import android.graphics.drawable.Drawable
 import android.text.Editable
-import android.text.InputType
 import android.text.TextWatcher
 import android.util.AttributeSet
 import android.view.MotionEvent
@@ -13,8 +12,7 @@ import androidx.appcompat.widget.AppCompatEditText
 import androidx.core.content.ContextCompat
 import com.riyandifirman.storyapp.R
 
-class EditTextEmail : AppCompatEditText, View.OnTouchListener {
-
+class EditTextName : AppCompatEditText, View.OnTouchListener {
     private lateinit var clearButtonImage: Drawable
 
     constructor(context: Context) : super(context) {
@@ -29,7 +27,7 @@ class EditTextEmail : AppCompatEditText, View.OnTouchListener {
 
     override fun onDraw(canvas: Canvas?) {
         super.onDraw(canvas)
-        hint = "johndoe29@gmail.com"
+        hint = "John Doe"
         textAlignment = View.TEXT_ALIGNMENT_VIEW_START
     }
 
@@ -60,8 +58,8 @@ class EditTextEmail : AppCompatEditText, View.OnTouchListener {
 
     private fun setButtonDrawables(
         startOfTheText: Drawable? = null,
-        topOfTheText:Drawable? = null,
-        endOfTheText:Drawable? = null,
+        topOfTheText: Drawable? = null,
+        endOfTheText: Drawable? = null,
         bottomOfTheText: Drawable? = null
     ){
         setCompoundDrawablesWithIntrinsicBounds(
