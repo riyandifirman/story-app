@@ -1,3 +1,6 @@
 <resources>
     <string name="app_name">Story App</string>
+    <string name="password">Password</string>
+    <string name="email">Email</string>
+    <string name="less_password">number of passwords less than 8 characters!</string>
 </resources>
