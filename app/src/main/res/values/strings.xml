@@ -10,4 +10,7 @@
     <string name="register_now">Register Now</string>
     <string name="name">Name</string>
     <string name="description">Description</string>
+    <string name="gallery">Gallery</string>
+    <string name="camera">Camera</string>
+    <string name="upload">Upload</string>
 </resources>
