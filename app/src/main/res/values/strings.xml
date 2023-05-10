@@ -3,4 +3,7 @@
     <string name="password">Password</string>
     <string name="email">Email</string>
     <string name="less_password">number of passwords less than 8 characters!</string>
+    <string name="login_now">Login Now</string>
+    <string name="register">Dont have an account?</string>
+    <string name="register_now">Register Now</string>
 </resources>
