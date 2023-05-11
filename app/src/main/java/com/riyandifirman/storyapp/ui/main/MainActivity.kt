@@ -54,7 +54,7 @@ class MainActivity : AppCompatActivity() {
 
     // fungsi ketika menu logout di klik
     override fun onOptionsItemSelected(item: MenuItem): Boolean {
-        if (item.itemId == R.id.logout) {
+        if (item.itemId == R.id.action_logout) {
             val alertDialogBuilder = AlertDialog.Builder(this)
             with(alertDialogBuilder) {
                 setTitle("Log Out")
