@@ -1,5 +1,7 @@
 package com.riyandifirman.storyapp.ui.login
 
+import android.animation.AnimatorSet
+import android.animation.ObjectAnimator
 import android.content.Intent
 import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
@@ -19,6 +21,7 @@ import com.riyandifirman.storyapp.settings.ApiConfig
 import com.riyandifirman.storyapp.settings.Preferences
 import com.riyandifirman.storyapp.ui.main.MainActivity
 import com.riyandifirman.storyapp.ui.register.RegisterActivity
+import kotlinx.coroutines.NonCancellable.start
 import retrofit2.Call
 import retrofit2.Callback
 import retrofit2.Response
@@ -95,6 +98,8 @@ class LoginActivity : AppCompatActivity() {
             login(emailEditText.text.toString(), passwordEditText.text.toString())
             showLoading(true)
         }
+
+        playAnimation()
     }
 
     // fungsi untuk mengatur button login
@@ -136,4 +141,27 @@ class LoginActivity : AppCompatActivity() {
 
     // fungsi untuk menampilkan loading
     private fun showLoading(state: Boolean) { binding.progressBar.visibility = if (state) View.VISIBLE else View.INVISIBLE }
+
+    private fun playAnimation() {
+        ObjectAnimator.ofFloat(binding.ivLogo, View.TRANSLATION_X, -30f, 30f).apply {
+            duration = 6000
+            repeatCount = ObjectAnimator.INFINITE
+            repeatMode = ObjectAnimator.REVERSE
+            start()
+        }
+
+        val loginNow = ObjectAnimator.ofFloat(binding.tvLoginNow, View.ALPHA, 1f).setDuration(500)
+        val emailTitle = ObjectAnimator.ofFloat(binding.tvEmail, View.ALPHA, 1f).setDuration(500)
+        val email = ObjectAnimator.ofFloat(binding.edLoginEmail, View.ALPHA, 1f).setDuration(500)
+        val passwordTitle = ObjectAnimator.ofFloat(binding.tvPassword, View.ALPHA, 1f).setDuration(500)
+        val password = ObjectAnimator.ofFloat(binding.edLoginPassword, View.ALPHA, 1f).setDuration(500)
+        val register = ObjectAnimator.ofFloat(binding.tvRegister, View.ALPHA, 1f).setDuration(500)
+        val registerNow = ObjectAnimator.ofFloat(binding.tvRegisterNow, View.ALPHA, 1f).setDuration(500)
+        val loginButton = ObjectAnimator.ofFloat(binding.btnLogin, View.ALPHA, 1f).setDuration(500)
+
+        AnimatorSet().apply {
+            playSequentially(loginNow, emailTitle, email, passwordTitle, password, loginButton, register, registerNow)
+            start()
+        }
+    }
 }
