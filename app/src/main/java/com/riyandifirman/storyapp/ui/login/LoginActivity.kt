@@ -1,5 +1,6 @@
 package com.riyandifirman.storyapp.ui.login
 
+import android.content.Intent
 import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
 import android.text.Editable
@@ -11,9 +12,12 @@ import com.riyandifirman.storyapp.R
 import com.riyandifirman.storyapp.customview.EditTextEmail
 import com.riyandifirman.storyapp.customview.EditTextPassword
 import com.riyandifirman.storyapp.customview.LoginButton
+import com.riyandifirman.storyapp.databinding.ActivityLoginBinding
+import com.riyandifirman.storyapp.ui.register.RegisterActivity
 
 class LoginActivity : AppCompatActivity() {
 
+    private lateinit var binding: ActivityLoginBinding
     private lateinit var loginButton: LoginButton
     private lateinit var emailEditText: EditTextEmail
     private lateinit var passwordEditText: EditTextPassword
@@ -21,12 +25,13 @@ class LoginActivity : AppCompatActivity() {
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
-        setContentView(R.layout.activity_login)
+        binding = ActivityLoginBinding.inflate(layoutInflater)
+        setContentView(binding.root)
 
-        loginButton = findViewById(R.id.btn_login)
-        emailEditText = findViewById(R.id.ed_login_email)
-        passwordEditText = findViewById(R.id.ed_login_password)
-        errorPassword = findViewById(R.id.tv_error_password)
+        loginButton = binding.btnLogin
+        emailEditText = binding.edLoginEmail
+        passwordEditText = binding.edLoginPassword
+        errorPassword = binding.tvErrorPassword
 
         setMyButtonEnable()
 
@@ -57,6 +62,13 @@ class LoginActivity : AppCompatActivity() {
                 }
             }
         })
+
+        // fungsi ketika tulisan register now diklik
+        binding.tvRegisterNow.setOnClickListener {
+            val intent = Intent(this@LoginActivity, RegisterActivity::class.java)
+            startActivity(intent)
+            finish()
+        }
     }
 
     private fun setMyButtonEnable() {

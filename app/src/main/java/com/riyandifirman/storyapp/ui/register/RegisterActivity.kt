@@ -1,16 +1,28 @@
 package com.riyandifirman.storyapp.ui.register
 
+import android.content.Intent
 import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
 import android.text.Editable
 import android.text.TextWatcher
+import android.util.Log
 import android.view.View
 import android.widget.EditText
 import android.widget.TextView
+import android.widget.Toast
 import com.riyandifirman.storyapp.R
 import com.riyandifirman.storyapp.customview.*
+import com.riyandifirman.storyapp.databinding.ActivityRegisterBinding
+import com.riyandifirman.storyapp.response.SignUpResponse
+import com.riyandifirman.storyapp.settings.ApiConfig
+import com.riyandifirman.storyapp.ui.login.LoginActivity
+import retrofit2.Call
+import retrofit2.Callback
+import retrofit2.Response
 
 class RegisterActivity : AppCompatActivity() {
+
+    private lateinit var binding: ActivityRegisterBinding
     private lateinit var registerButton: RegisterButton
     private lateinit var emailEditText: EditTextEmail
     private lateinit var passwordEditText: EditTextPassword
@@ -19,16 +31,18 @@ class RegisterActivity : AppCompatActivity() {
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
-        setContentView(R.layout.activity_register)
+        binding = ActivityRegisterBinding.inflate(layoutInflater)
+        setContentView(binding.root)
 
-        registerButton = findViewById(R.id.btn_register)
-        emailEditText = findViewById(R.id.ed_register_email)
-        passwordEditText = findViewById(R.id.ed_register_password)
-        errorPassword = findViewById(R.id.tv_error_password)
-        nameEditText = findViewById(R.id.ed_register_name)
+        registerButton = binding.btnRegister
+        emailEditText = binding.edRegisterEmail
+        passwordEditText = binding.edRegisterPassword
+        errorPassword = binding.tvErrorPassword
+        nameEditText = binding.edRegisterName
 
         setMyButtonEnable()
 
+        // listener untuk kolom email
         emailEditText.addTextChangedListener(object : TextWatcher {
             override fun beforeTextChanged(s: CharSequence, start: Int, count: Int, after: Int) {
                 // Do nothing.
@@ -41,6 +55,7 @@ class RegisterActivity : AppCompatActivity() {
             }
         })
 
+        // listener untuk kolom nama
         nameEditText.addTextChangedListener(object : TextWatcher {
             override fun beforeTextChanged(s: CharSequence, start: Int, count: Int, after: Int) {
                 // Do nothing.
@@ -53,12 +68,13 @@ class RegisterActivity : AppCompatActivity() {
             }
         })
 
+        // listener untuk kolom password
         passwordEditText.addTextChangedListener(object : TextWatcher {
             override fun beforeTextChanged(s: CharSequence, start: Int, count: Int, after: Int) {
                 // Do nothing.
             }
             override fun onTextChanged(s: CharSequence, start: Int, before: Int, count: Int) {
-                setMyButtonEnable()
+                if (s != null && s.length >= 8) setMyButtonEnable() else registerButton.isEnabled = false
             }
             override fun afterTextChanged(s: Editable) {
                 if (s != null && s.length < 8) {
@@ -68,12 +84,52 @@ class RegisterActivity : AppCompatActivity() {
                 }
             }
         })
+
+        // fungsi ketika tombol register ditekan
+        registerButton.setOnClickListener {
+            register(nameEditText.text.toString(), emailEditText.text.toString(), passwordEditText.text.toString())
+        }
+
+        // fungsi ketika tulisan login here diklik
+        binding.tvLoginHere.setOnClickListener {
+            val intent = Intent(this@RegisterActivity, LoginActivity::class.java)
+            startActivity(intent)
+            finish()
+        }
     }
 
+    // fungsi untuk mengatur button register
     private fun setMyButtonEnable() {
         val email = emailEditText.text
         val password = passwordEditText.text
         val name = nameEditText.text
         registerButton.isEnabled = (email != null && email.toString().isNotEmpty()) && (password != null && password.toString().isNotEmpty()) && (name != null && name.toString().isNotEmpty())
+    }
+
+    // fungsi untuk melakukan register
+    private fun register (name: String, email: String, password: String) {
+        val client = ApiConfig.getApiService().registerUser(name, email, password)
+        client.enqueue(object : Callback<SignUpResponse> {
+            // Jika berhasil
+            override fun onResponse(call: Call<SignUpResponse>, response: Response<SignUpResponse>) {
+                if (response.isSuccessful) {
+                    val signUpResponse = response.body()
+                    if (signUpResponse != null) {
+                        if (signUpResponse.error) {
+                            Toast.makeText(this@RegisterActivity, "Register Failed!", Toast.LENGTH_LONG).show()
+                        } else {
+                            val intent = Intent(this@RegisterActivity, LoginActivity::class.java)
+                            startActivity(intent)
+                            finish()
+                        }
+                    }
+                }
+            }
+
+            // Jika gagal
+            override fun onFailure(call: Call<SignUpResponse>, t: Throwable) {
+                Toast.makeText(this@RegisterActivity, "onFailure: ${t.message.toString()}" , Toast.LENGTH_LONG).show()
+            }
+        })
     }
 }
