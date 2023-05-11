@@ -10,6 +10,7 @@ import android.widget.Toast
 import androidx.appcompat.app.AlertDialog
 import androidx.recyclerview.widget.LinearLayoutManager
 import androidx.recyclerview.widget.RecyclerView
+import com.google.android.material.floatingactionbutton.FloatingActionButton
 import com.riyandifirman.storyapp.R
 import com.riyandifirman.storyapp.adapter.StoryAdapter
 import com.riyandifirman.storyapp.databinding.ActivityMainBinding
@@ -18,6 +19,7 @@ import com.riyandifirman.storyapp.response.ListStoryItem
 import com.riyandifirman.storyapp.response.Story
 import com.riyandifirman.storyapp.settings.ApiConfig
 import com.riyandifirman.storyapp.settings.Preferences
+import com.riyandifirman.storyapp.ui.addstory.AddStoryActivity
 import com.riyandifirman.storyapp.ui.detailstory.DetailStoryActivity
 import com.riyandifirman.storyapp.ui.login.LoginActivity
 import kotlinx.coroutines.*
@@ -30,6 +32,7 @@ class MainActivity : AppCompatActivity() {
 
     private lateinit var binding: ActivityMainBinding
     private lateinit var myPreference: Preferences
+    private lateinit var fab: FloatingActionButton
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
@@ -44,6 +47,12 @@ class MainActivity : AppCompatActivity() {
         // fungsi untuk mengambil data story
         getStory()
         updateStory()
+
+        fab = binding.fab
+        fab.setOnClickListener {
+            val intent = Intent(this@MainActivity, AddStoryActivity::class.java)
+            startActivity(intent)
+        }
     }
 
     // fungsi untuk menampilkan option menu logout
