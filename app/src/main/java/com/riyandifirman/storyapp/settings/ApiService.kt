@@ -25,14 +25,14 @@ interface ApiService {
 
     // fungsi untuk mendapatkan semua data story
     @GET("v1/stories")
-    fun getAllStories(
+    fun getAllStory(
         @Header("Authorization") Bearer: String
     ): Call<GetStoryResponse>
 
     // fungsi untuk mengirimkan data saat upload story
     @Multipart
     @POST("v1/stories")
-    fun uploadStories(
+    fun uploadStory(
         @Header("Authorization") Bearer: String,
         @Part file: MultipartBody.Part,
         @Part("description") description: RequestBody

@@ -50,6 +50,7 @@ class LoginActivity : AppCompatActivity() {
             finish()
         }
 
+        showLoading(false)
         setMyButtonEnable()
 
         // listener untuk kolom email
