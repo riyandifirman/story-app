@@ -13,11 +13,20 @@ import com.riyandifirman.storyapp.customview.EditTextEmail
 import com.riyandifirman.storyapp.customview.EditTextPassword
 import com.riyandifirman.storyapp.customview.LoginButton
 import com.riyandifirman.storyapp.databinding.ActivityLoginBinding
+import com.riyandifirman.storyapp.response.LoginResponse
+import com.riyandifirman.storyapp.response.SignUpResponse
+import com.riyandifirman.storyapp.settings.ApiConfig
+import com.riyandifirman.storyapp.settings.Preferences
+import com.riyandifirman.storyapp.ui.main.MainActivity
 import com.riyandifirman.storyapp.ui.register.RegisterActivity
+import retrofit2.Call
+import retrofit2.Callback
+import retrofit2.Response
 
 class LoginActivity : AppCompatActivity() {
 
     private lateinit var binding: ActivityLoginBinding
+    private lateinit var myPreference: Preferences
     private lateinit var loginButton: LoginButton
     private lateinit var emailEditText: EditTextEmail
     private lateinit var passwordEditText: EditTextPassword
@@ -32,9 +41,18 @@ class LoginActivity : AppCompatActivity() {
         emailEditText = binding.edLoginEmail
         passwordEditText = binding.edLoginPassword
         errorPassword = binding.tvErrorPassword
+        myPreference = Preferences(this)
+
+        // jika sudah login, langsung pindah ke MainActivity
+        if (myPreference.getStatusLogin()) {
+            val intent = Intent(this@LoginActivity, MainActivity::class.java)
+            startActivity(intent)
+            finish()
+        }
 
         setMyButtonEnable()
 
+        // listener untuk kolom email
         emailEditText.addTextChangedListener(object : TextWatcher {
             override fun beforeTextChanged(s: CharSequence, start: Int, count: Int, after: Int) {
                 // Do nothing.
@@ -47,12 +65,13 @@ class LoginActivity : AppCompatActivity() {
             }
         })
 
+        // listener untuk kolom password
         passwordEditText.addTextChangedListener(object : TextWatcher {
             override fun beforeTextChanged(s: CharSequence, start: Int, count: Int, after: Int) {
                 // Do nothing.
             }
             override fun onTextChanged(s: CharSequence, start: Int, before: Int, count: Int) {
-                setMyButtonEnable()
+                if (s != null && s.length >= 8) setMyButtonEnable() else loginButton.isEnabled = false
             }
             override fun afterTextChanged(s: Editable) {
                 if (s != null && s.length < 8) {
@@ -69,11 +88,46 @@ class LoginActivity : AppCompatActivity() {
             startActivity(intent)
             finish()
         }
+
+        // fungsi ketika tombol login diklik
+        loginButton.setOnClickListener{
+            login(emailEditText.text.toString(), passwordEditText.text.toString())
+        }
     }
 
+    // fungsi untuk mengatur button login
     private fun setMyButtonEnable() {
         val email = emailEditText.text
         val password = passwordEditText.text
         loginButton.isEnabled = (email != null && email.toString().isNotEmpty()) && (password != null && password.toString().isNotEmpty())
+    }
+
+    // fungsi untuk login
+    private fun login(email: String, password: String) {
+        val client = ApiConfig.getApiService().loginUser(email, password)
+        client.enqueue(object : Callback<LoginResponse> {
+            // Jika berhasil
+            override fun onResponse(call: Call<LoginResponse>, response: Response<LoginResponse>) {
+                if (response.isSuccessful) {
+                    val loginResponse = response.body()
+                    if (loginResponse != null) {
+                        if (loginResponse.error) {
+                            Toast.makeText(this@LoginActivity, "Login Failed!", Toast.LENGTH_LONG).show()
+                        } else {
+                            myPreference.saveUserToken(loginResponse.loginResult.token)
+                            myPreference.setStatusLogin(true)
+                            val intent = Intent(this@LoginActivity, MainActivity::class.java)
+                            startActivity(intent)
+                            finishAffinity()
+                        }
+                    }
+                }
+            }
+
+            // Jika gagal
+            override fun onFailure(call: Call<LoginResponse>, t: Throwable) {
+                Toast.makeText(this@LoginActivity, "onFailure: ${t.message.toString()}" , Toast.LENGTH_LONG).show()
+            }
+        })
     }
 }
