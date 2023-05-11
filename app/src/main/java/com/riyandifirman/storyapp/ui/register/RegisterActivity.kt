@@ -41,6 +41,7 @@ class RegisterActivity : AppCompatActivity() {
         nameEditText = binding.edRegisterName
 
         setMyButtonEnable()
+        showLoading(false)
 
         // listener untuk kolom email
         emailEditText.addTextChangedListener(object : TextWatcher {
@@ -88,6 +89,7 @@ class RegisterActivity : AppCompatActivity() {
         // fungsi ketika tombol register ditekan
         registerButton.setOnClickListener {
             register(nameEditText.text.toString(), emailEditText.text.toString(), passwordEditText.text.toString())
+            showLoading(true)
         }
 
         // fungsi ketika tulisan login here diklik
@@ -116,9 +118,10 @@ class RegisterActivity : AppCompatActivity() {
                     val signUpResponse = response.body()
                     if (signUpResponse != null) {
                         if (signUpResponse.error) {
-                            Toast.makeText(this@RegisterActivity, "Register Failed!", Toast.LENGTH_LONG).show()
+                            Toast.makeText(this@RegisterActivity, signUpResponse.message, Toast.LENGTH_LONG).show()
                         } else {
                             val intent = Intent(this@RegisterActivity, LoginActivity::class.java)
+                            showLoading(false)
                             startActivity(intent)
                             finish()
                         }
@@ -132,4 +135,7 @@ class RegisterActivity : AppCompatActivity() {
             }
         })
     }
+
+    // fungsi untuk menampilkan loading
+    private fun showLoading(state: Boolean) { binding.progressBar.visibility = if (state) View.VISIBLE else View.INVISIBLE }
 }
