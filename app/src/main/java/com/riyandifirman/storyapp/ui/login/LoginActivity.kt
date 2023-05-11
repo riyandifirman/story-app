@@ -92,6 +92,7 @@ class LoginActivity : AppCompatActivity() {
         // fungsi ketika tombol login diklik
         loginButton.setOnClickListener{
             login(emailEditText.text.toString(), passwordEditText.text.toString())
+            showLoading(true)
         }
     }
 
@@ -117,6 +118,7 @@ class LoginActivity : AppCompatActivity() {
                             myPreference.saveUserToken(loginResponse.loginResult.token)
                             myPreference.setStatusLogin(true)
                             val intent = Intent(this@LoginActivity, MainActivity::class.java)
+                            showLoading(false)
                             startActivity(intent)
                             finishAffinity()
                         }
@@ -130,4 +132,7 @@ class LoginActivity : AppCompatActivity() {
             }
         })
     }
+
+    // fungsi untuk menampilkan loading
+    private fun showLoading(state: Boolean) { binding.progressBar.visibility = if (state) View.VISIBLE else View.INVISIBLE }
 }
