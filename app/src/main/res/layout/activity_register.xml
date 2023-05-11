@@ -24,6 +24,7 @@
         android:text="@string/register_now"
         android:textSize="30sp"
         android:textStyle="bold"
+        android:alpha="0"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toBottomOf="@+id/iv_logo" />
@@ -37,6 +38,7 @@
         android:text="@string/name"
         android:textSize="20sp"
         android:textStyle="bold"
+        android:alpha="0"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toBottomOf="@+id/tv_register_now" />
@@ -50,6 +52,7 @@
         android:layout_marginTop="8dp"
         android:layout_marginEnd="16dp"
         android:inputType="textPersonName"
+        android:alpha="0"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toBottomOf="@+id/tv_name" />
@@ -63,6 +66,7 @@
         android:text="@string/email"
         android:textSize="20sp"
         android:textStyle="bold"
+        android:alpha="0"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toBottomOf="@+id/ed_register_name" />
@@ -75,6 +79,7 @@
         android:layout_marginStart="16dp"
         android:layout_marginTop="8dp"
         android:layout_marginEnd="16dp"
+        android:alpha="0"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toBottomOf="@+id/tv_email" />
@@ -88,6 +93,7 @@
         android:text="@string/password"
         android:textSize="20sp"
         android:textStyle="bold"
+        android:alpha="0"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toBottomOf="@+id/ed_register_email" />
 
@@ -114,6 +120,7 @@
         android:layout_marginTop="8dp"
         android:layout_marginEnd="16dp"
         android:inputType="textPassword"
+        android:alpha="0"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toBottomOf="@+id/tv_password" />
@@ -126,6 +133,7 @@
         android:layout_marginTop="40dp"
         android:layout_marginEnd="16dp"
         android:enabled="false"
+        android:alpha="0"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintHorizontal_bias="0.0"
         app:layout_constraintStart_toStartOf="parent"
@@ -138,6 +146,7 @@
         android:layout_marginStart="105dp"
         android:layout_marginTop="8dp"
         android:text="@string/login"
+        android:alpha="0"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toBottomOf="@+id/btn_register" />
 
@@ -150,6 +159,7 @@
         android:text="@string/login_here"
         android:textColor="@color/green_500"
         android:textStyle="bold"
+        android:alpha="0"
         app:layout_constraintStart_toEndOf="@+id/tv_login"
         app:layout_constraintTop_toBottomOf="@+id/btn_register" />
 

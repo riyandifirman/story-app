@@ -1,5 +1,7 @@
 package com.riyandifirman.storyapp.ui.register
 
+import android.animation.AnimatorSet
+import android.animation.ObjectAnimator
 import android.content.Intent
 import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
@@ -98,6 +100,8 @@ class RegisterActivity : AppCompatActivity() {
             startActivity(intent)
             finish()
         }
+
+        playAnimation()
     }
 
     // fungsi untuk mengatur button register
@@ -138,4 +142,29 @@ class RegisterActivity : AppCompatActivity() {
 
     // fungsi untuk menampilkan loading
     private fun showLoading(state: Boolean) { binding.progressBar.visibility = if (state) View.VISIBLE else View.INVISIBLE }
+
+    private fun playAnimation() {
+        ObjectAnimator.ofFloat(binding.ivLogo, View.TRANSLATION_X, -30f, 30f).apply {
+            duration = 6000
+            repeatCount = ObjectAnimator.INFINITE
+            repeatMode = ObjectAnimator.REVERSE
+            start()
+        }
+
+        val registerNow = ObjectAnimator.ofFloat(binding.tvRegisterNow, View.ALPHA, 1f).setDuration(500)
+        val nameTitle = ObjectAnimator.ofFloat(binding.tvName, View.ALPHA, 1f).setDuration(500)
+        val name = ObjectAnimator.ofFloat(binding.edRegisterName, View.ALPHA, 1f).setDuration(500)
+        val emailTitle = ObjectAnimator.ofFloat(binding.tvEmail, View.ALPHA, 1f).setDuration(500)
+        val email = ObjectAnimator.ofFloat(binding.edRegisterEmail, View.ALPHA, 1f).setDuration(500)
+        val passwordTitle = ObjectAnimator.ofFloat(binding.tvPassword, View.ALPHA, 1f).setDuration(500)
+        val password = ObjectAnimator.ofFloat(binding.edRegisterPassword, View.ALPHA, 1f).setDuration(500)
+        val registerButton = ObjectAnimator.ofFloat(binding.btnRegister, View.ALPHA, 1f).setDuration(500)
+        val login = ObjectAnimator.ofFloat(binding.tvLogin, View.ALPHA, 1f).setDuration(500)
+        val loginHere = ObjectAnimator.ofFloat(binding.tvLoginHere, View.ALPHA, 1f).setDuration(500)
+
+        AnimatorSet().apply {
+            playSequentially(registerNow, nameTitle, name, emailTitle, email, passwordTitle, password, registerButton, login, loginHere)
+            start()
+        }
+    }
 }
