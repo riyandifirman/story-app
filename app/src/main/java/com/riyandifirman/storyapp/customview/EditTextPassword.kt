@@ -8,6 +8,7 @@ import android.text.TextWatcher
 import android.util.AttributeSet
 import android.view.MotionEvent
 import android.view.View
+import android.widget.TextView
 import androidx.appcompat.widget.AppCompatEditText
 import androidx.core.content.ContextCompat
 import com.riyandifirman.storyapp.R
@@ -15,6 +16,7 @@ import com.riyandifirman.storyapp.R
 class EditTextPassword : AppCompatEditText, View.OnTouchListener {
 
     private lateinit var clearButtonImage: Drawable
+    private lateinit var errorPassword: TextView
 
     constructor(context: Context) : super(context) {
         init()
@@ -42,6 +44,7 @@ class EditTextPassword : AppCompatEditText, View.OnTouchListener {
             }
             override fun onTextChanged(s: CharSequence, start: Int, before: Int, count: Int) {
                 if (s.toString().isNotEmpty()) showClearButton() else hideClearButton()
+                if (s != null && s.length < 8) showError() else hideError()
             }
             override fun afterTextChanged(s: Editable) {
                 // Do nothing.
@@ -49,14 +52,32 @@ class EditTextPassword : AppCompatEditText, View.OnTouchListener {
         })
     }
 
+    // fungsi untuk bind error password
+    fun bindTextView(errorPassword: TextView) {
+        this.errorPassword = errorPassword
+    }
+
+    // fungsi untuk menampilkan error password
+    private fun showError() {
+        errorPassword.visibility = View.VISIBLE
+    }
+
+    // fungsi untuk menyembunyikan error password
+    private fun hideError() {
+        errorPassword.visibility = View.GONE
+    }
+
+    // fungsi untuk menampilkan clear button
     private fun showClearButton() {
         setButtonDrawables(endOfTheText = clearButtonImage)
     }
 
+    // fungsi untuk menyembunyikan clear button
     private fun hideClearButton() {
         setButtonDrawables()
     }
 
+    // fungsi untuk mengatur button
     private fun setButtonDrawables(
         startOfTheText: Drawable? = null,
         topOfTheText: Drawable? = null,
@@ -71,6 +92,7 @@ class EditTextPassword : AppCompatEditText, View.OnTouchListener {
         )
     }
 
+    // fungsi untuk menangani event touch
     override fun onTouch(v: View?, event: MotionEvent) : Boolean {
         if (compoundDrawables[2] != null) {
             val clearButtonStart: Float

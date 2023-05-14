@@ -39,7 +39,7 @@ class RegisterActivity : AppCompatActivity() {
         registerButton = binding.btnRegister
         emailEditText = binding.edRegisterEmail
         passwordEditText = binding.edRegisterPassword
-        errorPassword = binding.tvErrorPassword
+        errorPassword = binding.errorPassword
         nameEditText = binding.edRegisterName
 
         setMyButtonEnable()
@@ -71,6 +71,9 @@ class RegisterActivity : AppCompatActivity() {
             }
         })
 
+        // binding untuk textview error password
+        passwordEditText.bindTextView(errorPassword)
+
         // listener untuk kolom password
         passwordEditText.addTextChangedListener(object : TextWatcher {
             override fun beforeTextChanged(s: CharSequence, start: Int, count: Int, after: Int) {
@@ -80,11 +83,7 @@ class RegisterActivity : AppCompatActivity() {
                 if (s != null && s.length >= 8) setMyButtonEnable() else registerButton.isEnabled = false
             }
             override fun afterTextChanged(s: Editable) {
-                if (s != null && s.length < 8) {
-                    errorPassword.visibility = View.VISIBLE
-                } else {
-                    errorPassword.visibility = View.GONE
-                }
+                // Do nothing.
             }
         })
 

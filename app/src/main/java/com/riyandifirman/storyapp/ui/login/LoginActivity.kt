@@ -43,7 +43,7 @@ class LoginActivity : AppCompatActivity() {
         loginButton = binding.btnLogin
         emailEditText = binding.edLoginEmail
         passwordEditText = binding.edLoginPassword
-        errorPassword = binding.tvErrorPassword
+        errorPassword = binding.errorPassword
         myPreference = Preferences(this)
 
         // jika sudah login, langsung pindah ke MainActivity
@@ -69,6 +69,9 @@ class LoginActivity : AppCompatActivity() {
             }
         })
 
+        // binding untuk textview error password
+        passwordEditText.bindTextView(errorPassword)
+
         // listener untuk kolom password
         passwordEditText.addTextChangedListener(object : TextWatcher {
             override fun beforeTextChanged(s: CharSequence, start: Int, count: Int, after: Int) {
@@ -78,11 +81,7 @@ class LoginActivity : AppCompatActivity() {
                 if (s != null && s.length >= 8) setMyButtonEnable() else loginButton.isEnabled = false
             }
             override fun afterTextChanged(s: Editable) {
-                if (s != null && s.length < 8) {
-                    errorPassword.visibility = View.VISIBLE
-                } else {
-                    errorPassword.visibility = View.GONE
-                }
+                // Do nothing.
             }
         })
 
