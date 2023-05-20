@@ -124,7 +124,6 @@ class MainActivity : AppCompatActivity() {
                                 binding.rvStory.apply {
                                     layoutManager = LinearLayoutManager(this@MainActivity)
                                     setHasFixedSize(true)
-                                    storyAdapter.notifyDataSetChanged()
                                     adapter = storyAdapter
                                 }
 

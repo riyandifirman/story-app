@@ -1,5 +1,7 @@
 package com.riyandifirman.storyapp.settings
 
+import android.os.Build
+import androidx.viewbinding.BuildConfig
 import okhttp3.OkHttpClient
 import okhttp3.logging.HttpLoggingInterceptor
 import retrofit2.Retrofit
@@ -9,8 +11,11 @@ class ApiConfig {
     companion object {
         fun getApiService(): ApiService {
             // membuat interceptor
-            val authInterceptor =
-                HttpLoggingInterceptor().setLevel(HttpLoggingInterceptor.Level.BODY)
+            val authInterceptor = if(BuildConfig.DEBUG) {
+                HttpLoggingInterceptor().setLevel(HttpLoggingInterceptor.Level.BODY)}
+            else {
+                HttpLoggingInterceptor().setLevel(HttpLoggingInterceptor.Level.NONE)
+            }
 
             // membuat client baru dengan interceptor yang sudah dibuat
             val client = OkHttpClient.Builder()

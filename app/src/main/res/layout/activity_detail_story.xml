@@ -11,6 +11,7 @@
         android:layout_width="300dp"
         android:layout_height="300dp"
         android:layout_marginTop="32dp"
+        android:contentDescription="@string/photo_story"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toTopOf="parent"
@@ -34,7 +35,7 @@
         android:layout_height="wrap_content"
         android:layout_marginStart="55dp"
         android:layout_marginTop="8dp"
-        android:hint="Created at : 1 May 2023"
+        android:hint="@string/date_story_hint"
         android:textSize="16sp"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toBottomOf="@+id/tv_detail_name" />

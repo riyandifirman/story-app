@@ -28,7 +28,7 @@ class SplashScreenActivity : AppCompatActivity() {
         }
 
         // Animasi
-        var image = binding.ivSplashScreenIcon
+        val image = binding.ivSplashScreenIcon
         image.alpha = 0f
         // Durasi animasi
         image.animate().setDuration(2000).alpha(1f).withEndAction {

@@ -31,11 +31,7 @@ class StoryAdapter(
 
     // fungsi untuk menghitung jumlah data
     override fun getItemCount(): Int {
-        if (list.size > 0) {
-            return list.size
-        } else {
-            return 0
-        }
+        return list.size
     }
 
     // fungsi untuk mengatur data yang akan ditampilkan
