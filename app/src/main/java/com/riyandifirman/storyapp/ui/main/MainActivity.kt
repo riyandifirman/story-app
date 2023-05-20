@@ -20,6 +20,7 @@ import com.riyandifirman.storyapp.settings.Preferences
 import com.riyandifirman.storyapp.ui.addstory.AddStoryActivity
 import com.riyandifirman.storyapp.ui.detailstory.DetailStoryActivity
 import com.riyandifirman.storyapp.ui.login.LoginActivity
+import com.riyandifirman.storyapp.ui.maps.MapsActivity
 import kotlinx.coroutines.*
 import retrofit2.Call
 import retrofit2.Callback
@@ -80,6 +81,9 @@ class MainActivity : AppCompatActivity() {
                 val alertDialog = alertDialogBuilder.create()
                 alertDialog.show()
             }
+        } else if (item.itemId == R.id.action_map) {
+            val intent = Intent(this@MainActivity, MapsActivity::class.java)
+            startActivity(intent)
         }
         return super.onOptionsItemSelected(item)
     }

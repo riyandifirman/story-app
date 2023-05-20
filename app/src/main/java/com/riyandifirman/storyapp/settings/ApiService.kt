@@ -45,4 +45,11 @@ interface ApiService {
         @Header("Authorization") Bearer: String,
         @Path("id") id: String
     ): Call<DetailStoryResponse>
+
+    // fungsi untuk mengambil lokasi story
+    @GET("v1/stories")
+    fun getStoryLocation(
+        @Header("Authorization") Bearer: String,
+        @Query("location") location: Int = 0
+    ): Call<GetStoryResponse>
 }
