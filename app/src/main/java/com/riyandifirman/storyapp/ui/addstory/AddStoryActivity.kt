@@ -6,16 +6,15 @@ import android.content.Intent.ACTION_GET_CONTENT
 import android.content.pm.PackageManager
 import android.graphics.BitmapFactory
 import android.net.Uri
-import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
 import android.provider.MediaStore
 import android.view.View
 import android.widget.Toast
 import androidx.activity.result.contract.ActivityResultContracts
+import androidx.appcompat.app.AppCompatActivity
 import androidx.core.app.ActivityCompat
 import androidx.core.content.ContextCompat
 import androidx.core.content.FileProvider
-import com.riyandifirman.storyapp.R
 import com.riyandifirman.storyapp.databinding.ActivityAddStoryBinding
 import com.riyandifirman.storyapp.response.AddStoryResponse
 import com.riyandifirman.storyapp.settings.*
@@ -120,7 +119,7 @@ class AddStoryActivity : AppCompatActivity() {
 
             getFile = myFile
 
-            val result = BitmapFactory.decodeFile( myFile?.path)
+            val result = BitmapFactory.decodeFile(myFile.path)
 
             binding.imgView.setImageBitmap(result)
         }
@@ -156,27 +155,29 @@ class AddStoryActivity : AppCompatActivity() {
             showLoading(true)
             uploadImageToServer(imageMultipart)
         } else {
-            Toast.makeText(this@AddStoryActivity, "Insert an image before!", Toast.LENGTH_SHORT).show()
+            Toast.makeText(this@AddStoryActivity, "Insert an image before!", Toast.LENGTH_SHORT)
+                .show()
         }
     }
 
     // fungsi untuk mengunggah gambar cerita ke server
-    private fun uploadImageToServer(img: MultipartBody.Part){
+    private fun uploadImageToServer(img: MultipartBody.Part) {
         val dispatcher = Executors.newSingleThreadExecutor().asCoroutineDispatcher()
         val scope = CoroutineScope(dispatcher)
-        val description = binding.edAddDescription.text.trim().toString().toRequestBody("text/plain".toMediaType())
+        val description = binding.edAddDescription.text.trim().toString()
+            .toRequestBody("text/plain".toMediaType())
         scope.launch {
             val token = "Bearer ${myPreference.getUserToken()}"
             withContext(Dispatchers.Main) {
-                val client = ApiConfig.getApiService().uploadStory(token,img,description)
-                client.enqueue(object: Callback<AddStoryResponse> {
+                val client = ApiConfig.getApiService().uploadStory(token, img, description)
+                client.enqueue(object : Callback<AddStoryResponse> {
                     override fun onResponse(
                         call: Call<AddStoryResponse>,
                         response: Response<AddStoryResponse>
                     ) {
-                        if(response.isSuccessful){
+                        if (response.isSuccessful) {
                             val responseBody = response.body()
-                            if (responseBody!=null && !responseBody.error){
+                            if (responseBody != null && !responseBody.error) {
                                 Intent(
                                     this@AddStoryActivity,
                                     MainActivity::class.java
@@ -187,12 +188,20 @@ class AddStoryActivity : AppCompatActivity() {
                                 }
                             }
                         } else {
-                            Toast.makeText(this@AddStoryActivity, response.message(), Toast.LENGTH_SHORT).show()
+                            Toast.makeText(
+                                this@AddStoryActivity,
+                                response.message(),
+                                Toast.LENGTH_SHORT
+                            ).show()
                         }
                     }
 
                     override fun onFailure(call: Call<AddStoryResponse>, t: Throwable) {
-                        Toast.makeText(this@AddStoryActivity, "onFailure: ${t.message.toString()}", Toast.LENGTH_SHORT).show()
+                        Toast.makeText(
+                            this@AddStoryActivity,
+                            "onFailure: ${t.message.toString()}",
+                            Toast.LENGTH_SHORT
+                        ).show()
                     }
                 })
             }
@@ -200,10 +209,12 @@ class AddStoryActivity : AppCompatActivity() {
     }
 
     // fungsi untuk menampilkan loading
-    private fun showLoading(state: Boolean) { binding.progressBar.visibility = if (state) View.VISIBLE else View.INVISIBLE }
+    private fun showLoading(state: Boolean) {
+        binding.progressBar.visibility = if (state) View.VISIBLE else View.INVISIBLE
+    }
 
     // companion object untuk menyimpan properti dan konstanta yang digunakan di activity ini
-    companion object{
+    companion object {
         private val REQUIRED_PERMISSIONS = arrayOf(Manifest.permission.CAMERA)
         private const val REQUEST_CODE_PERMISSIONS = 10
     }

@@ -1,9 +1,8 @@
 package com.riyandifirman.storyapp.ui.splashscreen
 
 import android.content.Intent
-import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
-import com.riyandifirman.storyapp.R
+import androidx.appcompat.app.AppCompatActivity
 import com.riyandifirman.storyapp.databinding.ActivitySplashScreenBinding
 import com.riyandifirman.storyapp.settings.Preferences
 import com.riyandifirman.storyapp.ui.login.LoginActivity
@@ -22,7 +21,7 @@ class SplashScreenActivity : AppCompatActivity() {
         myPreferences = Preferences(this)
 
         // cek status login dari preferences
-        if (myPreferences.getStatusLogin()){
+        if (myPreferences.getStatusLogin()) {
             val intent = Intent(this@SplashScreenActivity, MainActivity::class.java)
             startActivity(intent)
             finish()

@@ -15,7 +15,7 @@
         android:src="@drawable/ic_picture"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintTop_toTopOf="parent"/>
+        app:layout_constraintTop_toTopOf="parent" />
 
     <LinearLayout
         android:id="@+id/btn_source_image"
@@ -48,7 +48,7 @@
             android:background="@drawable/rounded_button_background"
             android:layout_weight="1"
             android:text="@string/camera"
-            android:textColor="#FFFFFF"/>
+            android:textColor="#FFFFFF" />
 
     </LinearLayout>
 

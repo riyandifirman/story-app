@@ -12,8 +12,10 @@ import com.riyandifirman.storyapp.response.ListStoryItem
 import java.text.SimpleDateFormat
 import java.util.*
 
-class StoryAdapter (private val list: List<ListStoryItem>, private val listener: OnAdapterClickListener)
-    : RecyclerView.Adapter<StoryAdapter.ListViewHolder>() {
+class StoryAdapter(
+    private val list: List<ListStoryItem>,
+    private val listener: OnAdapterClickListener
+) : RecyclerView.Adapter<StoryAdapter.ListViewHolder>() {
     // class untuk menampung data yang akan ditampilkan
     class ListViewHolder(view: View) : RecyclerView.ViewHolder(view) {
         val name = view.findViewById(R.id.tv_item_name) as TextView

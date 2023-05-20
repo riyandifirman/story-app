@@ -1,13 +1,12 @@
 package com.riyandifirman.storyapp.ui.main
 
-import android.app.ActivityOptions
 import android.content.Intent
-import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
 import android.view.Menu
 import android.view.MenuItem
 import android.widget.Toast
 import androidx.appcompat.app.AlertDialog
+import androidx.appcompat.app.AppCompatActivity
 import androidx.recyclerview.widget.LinearLayoutManager
 import androidx.recyclerview.widget.RecyclerView
 import com.google.android.material.floatingactionbutton.FloatingActionButton
@@ -16,7 +15,6 @@ import com.riyandifirman.storyapp.adapter.StoryAdapter
 import com.riyandifirman.storyapp.databinding.ActivityMainBinding
 import com.riyandifirman.storyapp.response.GetStoryResponse
 import com.riyandifirman.storyapp.response.ListStoryItem
-import com.riyandifirman.storyapp.response.Story
 import com.riyandifirman.storyapp.settings.ApiConfig
 import com.riyandifirman.storyapp.settings.Preferences
 import com.riyandifirman.storyapp.ui.addstory.AddStoryActivity
@@ -42,7 +40,7 @@ class MainActivity : AppCompatActivity() {
         myPreference = Preferences(this)
         myPreference.setStatusLogin(true)
 
-        val rvStory : RecyclerView = binding.rvStory
+        val rvStory: RecyclerView = binding.rvStory
 
         // fungsi untuk mengambil data story
         getStory()
@@ -94,26 +92,34 @@ class MainActivity : AppCompatActivity() {
             withContext(Dispatchers.Main) {
                 val client = ApiConfig.getApiService().getAllStory(token)
                 client.enqueue(object : Callback<GetStoryResponse> {
-                    override fun onResponse(call: Call<GetStoryResponse>, response: Response<GetStoryResponse>) {
+                    override fun onResponse(
+                        call: Call<GetStoryResponse>,
+                        response: Response<GetStoryResponse>
+                    ) {
                         if (response.isSuccessful) {
                             val responseBody = response.body()
                             if (responseBody != null && !responseBody.error) {
                                 val dataStory = responseBody.listStory
-                                val storyAdapter = StoryAdapter(dataStory, object: StoryAdapter.OnAdapterClickListener{
-                                    override fun onClick(story: ListStoryItem) {
-                                        val intent = Intent(this@MainActivity, DetailStoryActivity::class.java)
-                                        val bundle = Bundle()
+                                val storyAdapter = StoryAdapter(
+                                    dataStory,
+                                    object : StoryAdapter.OnAdapterClickListener {
+                                        override fun onClick(story: ListStoryItem) {
+                                            val intent = Intent(
+                                                this@MainActivity,
+                                                DetailStoryActivity::class.java
+                                            )
+                                            val bundle = Bundle()
 
-                                        bundle.putString("list_name",story.name)
-                                        bundle.putString("list_image", story.photoUrl)
-                                        bundle.putString("list_description", story.description)
-                                        bundle.putString("list_date", story.createdAt)
+                                            bundle.putString("list_name", story.name)
+                                            bundle.putString("list_image", story.photoUrl)
+                                            bundle.putString("list_description", story.description)
+                                            bundle.putString("list_date", story.createdAt)
 
-                                        intent.putExtras(bundle)
-                                        startActivity(intent)
-                                    }
+                                            intent.putExtras(bundle)
+                                            startActivity(intent)
+                                        }
 
-                                })
+                                    })
 
                                 binding.rvStory.apply {
                                     layoutManager = LinearLayoutManager(this@MainActivity)

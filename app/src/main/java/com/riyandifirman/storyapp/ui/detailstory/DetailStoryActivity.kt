@@ -1,9 +1,8 @@
 package com.riyandifirman.storyapp.ui.detailstory
 
-import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
+import androidx.appcompat.app.AppCompatActivity
 import com.bumptech.glide.Glide
-import com.riyandifirman.storyapp.R
 import com.riyandifirman.storyapp.databinding.ActivityDetailStoryBinding
 import java.text.SimpleDateFormat
 import java.util.*
