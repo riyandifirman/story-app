@@ -30,6 +30,14 @@ interface ApiService {
         @Header("Authorization") Bearer: String
     ): Call<GetStoryResponse>
 
+    // fungsi untuk mendapatkan semua data story dengan paging 3
+    @GET("v1/stories")
+    suspend fun getAllStoryPaging(
+        @Header("Authorization") Bearer: String,
+        @Query("page") page: Int = 0,
+        @Query("size") size: Int = 10
+    ): GetStoryResponse
+
     // fungsi untuk mengirimkan data saat upload story
     @Multipart
     @POST("v1/stories")

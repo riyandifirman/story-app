@@ -19,4 +19,5 @@
     <string name="date_story_hint">Created at : 1 May 2023</string>
     <string name="Maps">Maps</string>
     <string name="title_activity_maps">MapsActivity</string>
+    <string name="retry">Failed. Try Again!</string>
 </resources>
