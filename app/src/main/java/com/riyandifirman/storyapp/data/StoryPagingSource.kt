@@ -1,7 +1,6 @@
 package com.riyandifirman.storyapp.data
 
 import android.content.Context
-import android.util.Log
 import androidx.paging.PagingData
 import androidx.paging.PagingSource
 import androidx.paging.PagingState
@@ -11,7 +10,8 @@ import com.riyandifirman.storyapp.settings.Preferences
 import retrofit2.HttpException
 import java.io.IOException
 
-class StoryPagingSource (private val apiService: ApiService, context: Context) : PagingSource<Int, ListStoryItem>() {
+class StoryPagingSource(private val apiService: ApiService, context: Context) :
+    PagingSource<Int, ListStoryItem>() {
 
     private var myPreferences = Preferences(context)
 
@@ -37,7 +37,7 @@ class StoryPagingSource (private val apiService: ApiService, context: Context) :
             )
         } catch (exception: IOException) {
             return LoadResult.Error(exception)
-        } catch (exception: HttpException){
+        } catch (exception: HttpException) {
             return LoadResult.Error(exception)
         }
     }

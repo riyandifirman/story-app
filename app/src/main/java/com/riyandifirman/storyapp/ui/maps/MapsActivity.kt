@@ -1,13 +1,10 @@
 package com.riyandifirman.storyapp.ui.maps
 
-import android.content.Intent
 import android.content.res.Resources
-import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
 import android.util.Log
 import android.widget.Toast
-import androidx.recyclerview.widget.LinearLayoutManager
-
+import androidx.appcompat.app.AppCompatActivity
 import com.google.android.gms.maps.CameraUpdateFactory
 import com.google.android.gms.maps.GoogleMap
 import com.google.android.gms.maps.OnMapReadyCallback
@@ -17,18 +14,15 @@ import com.google.android.gms.maps.model.LatLngBounds
 import com.google.android.gms.maps.model.MapStyleOptions
 import com.google.android.gms.maps.model.MarkerOptions
 import com.riyandifirman.storyapp.R
-import com.riyandifirman.storyapp.adapter.StoryAdapter
 import com.riyandifirman.storyapp.databinding.ActivityMapsBinding
 import com.riyandifirman.storyapp.response.GetStoryResponse
-import com.riyandifirman.storyapp.response.ListStoryItem
 import com.riyandifirman.storyapp.settings.ApiConfig
 import com.riyandifirman.storyapp.settings.Preferences
-import com.riyandifirman.storyapp.ui.detailstory.DetailStoryActivity
-import kotlinx.coroutines.*
 import retrofit2.Call
 import retrofit2.Callback
 import retrofit2.Response
-import java.util.concurrent.Executors
+import java.text.SimpleDateFormat
+import java.util.*
 
 class MapsActivity : AppCompatActivity(), OnMapReadyCallback {
 
@@ -94,10 +88,22 @@ class MapsActivity : AppCompatActivity(), OnMapReadyCallback {
                             val lat = story.lat.toString().toDouble()
                             val lon = story.lon.toString().toDouble()
                             val location = LatLng(lat, lon)
+
+                            // fungsi untuk mengubah format tanggal
+                            val dateString = story.createdAt
+                            val inputFormat = SimpleDateFormat(
+                                "yyyy-MM-dd'T'HH:mm:ss.SSS'Z'",
+                                Locale.getDefault()
+                            )
+                            val date = inputFormat.parse(dateString)
+                            val outputFormat = SimpleDateFormat("dd-MM-yyyy", Locale.getDefault())
+                            val formattedDate = outputFormat.format(date)
+
                             mMap.addMarker(
                                 MarkerOptions()
                                     .position(location)
                                     .title(story.name)
+                                    .snippet("Marked at : $formattedDate")
                             )
                             boundsBuilder.include(location)
                         }

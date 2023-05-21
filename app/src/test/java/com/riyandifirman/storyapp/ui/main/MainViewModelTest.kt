@@ -6,23 +6,23 @@ import androidx.paging.AsyncPagingDataDiffer
 import androidx.paging.PagingData
 import androidx.recyclerview.widget.ListUpdateCallback
 import com.riyandifirman.storyapp.adapter.StoryAdapter
-import com.riyandifirman.storyapp.utils.DataDummy
-import org.junit.Assert.*
-import org.mockito.Mockito.`when`
-import org.mockito.junit.MockitoJUnitRunner
 import com.riyandifirman.storyapp.data.StoryPagingSource
 import com.riyandifirman.storyapp.data.StoryRepository
 import com.riyandifirman.storyapp.response.ListStoryItem
+import com.riyandifirman.storyapp.utils.DataDummy
 import com.riyandifirman.storyapp.utils.MainDispatcherRule
 import com.riyandifirman.storyapp.utils.getOrAwaitValue
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.ExperimentalCoroutinesApi
 import kotlinx.coroutines.test.runTest
+import org.junit.Assert.*
 import org.junit.Before
 import org.junit.Rule
 import org.junit.Test
 import org.junit.runner.RunWith
 import org.mockito.Mock
+import org.mockito.Mockito.`when`
+import org.mockito.junit.MockitoJUnitRunner
 
 @ExperimentalCoroutinesApi
 @RunWith(MockitoJUnitRunner::class)
@@ -34,10 +34,10 @@ class MainViewModelTest {
     @get:Rule
     val mainCoroutineRule = MainDispatcherRule()
 
+    private lateinit var mainViewModel: MainViewModel
+
     @Mock
     private lateinit var storyRepository: StoryRepository
-    private lateinit var mainViewModel: MainViewModel
-    private val dummyAllStory = DataDummy.generateDummyAllStory()
 
     @Before
     fun setUp() {
@@ -47,6 +47,7 @@ class MainViewModelTest {
     // Test Case 1 : Ketika berhasil memuat data story
     @Test
     fun `when Get Stories Should Not Null and Return Success Data`() = runTest {
+        val dummyAllStory = DataDummy.generateDummyAllStory()
         val data: PagingData<ListStoryItem> = StoryPagingSource.snapshot(dummyAllStory)
         val expectedStory = MutableLiveData<PagingData<ListStoryItem>>()
         expectedStory.value = data

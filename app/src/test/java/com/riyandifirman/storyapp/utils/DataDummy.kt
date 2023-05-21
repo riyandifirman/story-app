@@ -4,7 +4,7 @@ import com.riyandifirman.storyapp.response.ListStoryItem
 
 object DataDummy {
 
-    fun generateDummyAllStory(): List<ListStoryItem>{
+    fun generateDummyAllStory(): List<ListStoryItem> {
         val listStory = ArrayList<ListStoryItem>()
         for (i in 0..30) {
             val story = ListStoryItem(

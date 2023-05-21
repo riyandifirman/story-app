@@ -35,11 +35,12 @@
         <meta-data
             android:name="com.google.android.geo.API_KEY"
             android:value="AIzaSyAUUbV_azd7JJUNXH3anIDwjGcN4-Bxorg" />
+
         <activity
             android:name=".ui.maps.MapsActivity"
             android:exported="false"
             android:label="@string/title_activity_maps"
-            android:theme="@style/NoBarActivity"/>
+            android:theme="@style/NoBarActivity" />
         <activity
             android:name=".ui.splashscreen.SplashScreenActivity"
             android:exported="true"

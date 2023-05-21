@@ -1,6 +1,5 @@
 package com.riyandifirman.storyapp.settings
 
-import android.os.Build
 import androidx.viewbinding.BuildConfig
 import okhttp3.OkHttpClient
 import okhttp3.logging.HttpLoggingInterceptor
@@ -11,9 +10,9 @@ class ApiConfig {
     companion object {
         fun getApiService(): ApiService {
             // membuat interceptor
-            val authInterceptor = if(BuildConfig.DEBUG) {
-                HttpLoggingInterceptor().setLevel(HttpLoggingInterceptor.Level.BODY)}
-            else {
+            val authInterceptor = if (BuildConfig.DEBUG) {
+                HttpLoggingInterceptor().setLevel(HttpLoggingInterceptor.Level.BODY)
+            } else {
                 HttpLoggingInterceptor().setLevel(HttpLoggingInterceptor.Level.NONE)
             }
 

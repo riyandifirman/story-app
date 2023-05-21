@@ -3,7 +3,6 @@ package com.riyandifirman.storyapp.di
 import android.content.Context
 import com.riyandifirman.storyapp.data.StoryRepository
 import com.riyandifirman.storyapp.settings.ApiConfig
-import com.riyandifirman.storyapp.settings.Preferences
 
 object Injection {
     fun provideRepository(context: Context): StoryRepository {

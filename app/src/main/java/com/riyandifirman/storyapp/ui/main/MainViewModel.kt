@@ -5,7 +5,6 @@ import android.util.Log
 import androidx.lifecycle.*
 import androidx.paging.PagingData
 import androidx.paging.cachedIn
-import com.riyandifirman.storyapp.data.Story
 import com.riyandifirman.storyapp.data.StoryRepository
 import com.riyandifirman.storyapp.di.Injection
 import com.riyandifirman.storyapp.response.GetStoryResponse
@@ -15,7 +14,7 @@ import retrofit2.Call
 import retrofit2.Callback
 import retrofit2.Response
 
-class MainViewModel(storyRepository: StoryRepository): ViewModel() {
+class MainViewModel(storyRepository: StoryRepository) : ViewModel() {
     private val _listStory = MutableLiveData<List<ListStoryItem>>()
     private val listStory: LiveData<List<ListStoryItem>> = _listStory
 

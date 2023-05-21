@@ -2,10 +2,12 @@ package com.riyandifirman.storyapp.data
 
 import android.content.Context
 import androidx.lifecycle.LiveData
-import androidx.paging.*
+import androidx.paging.Pager
+import androidx.paging.PagingConfig
+import androidx.paging.PagingData
+import androidx.paging.liveData
 import com.riyandifirman.storyapp.response.ListStoryItem
 import com.riyandifirman.storyapp.settings.ApiService
-import com.riyandifirman.storyapp.settings.Preferences
 
 class StoryRepository(private val apiService: ApiService, private val context: Context) {
     fun getStory(): LiveData<PagingData<ListStoryItem>> {
