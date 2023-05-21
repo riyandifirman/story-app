@@ -6,6 +6,7 @@ import android.content.Intent.ACTION_GET_CONTENT
 import android.content.pm.PackageManager
 import android.graphics.BitmapFactory
 import android.net.Uri
+import android.os.Build
 import android.os.Bundle
 import android.provider.MediaStore
 import android.view.View
@@ -79,7 +80,7 @@ class AddStoryActivity : AppCompatActivity() {
 
         // listener untuk tombol camera
         binding.btnCamera.setOnClickListener {
-            openCamera()
+            openCameraX()
         }
 
         // listener untuk tombol add story
@@ -114,32 +115,28 @@ class AddStoryActivity : AppCompatActivity() {
     private val launcherIntentCamera = registerForActivityResult(
         ActivityResultContracts.StartActivityForResult()
     ) {
-        if (it.resultCode == RESULT_OK) {
-            val myFile = File(currentPhotoPath)
+        if (it.resultCode == CAMERA_X_RESULT) {
+            val myFile = if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.TIRAMISU) {
+                it.data?.getSerializableExtra("picture", File::class.java)
+            } else {
+                @Suppress("DEPRECATION")
+                it.data?.getSerializableExtra("picture")
+            } as? File
 
-            getFile = myFile
+            val isBackCamera = it.data?.getBooleanExtra("isBackCamera", true) as Boolean
 
-            val result = BitmapFactory.decodeFile(myFile.path)
-
-            binding.imgView.setImageBitmap(result)
+            myFile?.let { file ->
+                rotateFile(file, isBackCamera)
+                getFile = file
+                binding.imgView.setImageBitmap(BitmapFactory.decodeFile(file.path))
+            }
         }
     }
 
     // fungsi untuk membuka kamera dan mengambil foto
-    private fun openCamera() {
-        val intent = Intent(MediaStore.ACTION_IMAGE_CAPTURE)
-        intent.resolveActivity(packageManager)
-
-        createCustomTempFile(application).also {
-            val photoURI: Uri = FileProvider.getUriForFile(
-                this@AddStoryActivity,
-                "com.riyandifirman.storyapp",
-                it
-            )
-            currentPhotoPath = it.absolutePath
-            intent.putExtra(MediaStore.EXTRA_OUTPUT, photoURI)
-            launcherIntentCamera.launch(intent)
-        }
+    private fun openCameraX() {
+        val intent = Intent(this, CameraActivity::class.java)
+        launcherIntentCamera.launch(intent)
     }
 
     // fungsi untuk menambahkan cerita baru
@@ -215,6 +212,8 @@ class AddStoryActivity : AppCompatActivity() {
 
     // companion object untuk menyimpan properti dan konstanta yang digunakan di activity ini
     companion object {
+        const val CAMERA_X_RESULT = 200
+
         private val REQUIRED_PERMISSIONS = arrayOf(Manifest.permission.CAMERA)
         private const val REQUEST_CODE_PERMISSIONS = 10
     }
