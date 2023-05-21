@@ -45,5 +45,9 @@ class StoryPagingSource (private val apiService: ApiService, context: Context) :
 
     companion object {
         const val INITIAL_PAGE_INDEX = 1
+
+        fun snapshot(items: List<ListStoryItem>): PagingData<ListStoryItem> {
+            return PagingData.from(items)
+        }
     }
 }
